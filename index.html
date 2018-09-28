@@ -11,20 +11,32 @@
 
 </head>
 <body>
-    <div class="container'fluid">
-        <img class='backgroundImg' src="http://smashbros-miiverse.com/images/stages/w300/arena-ferox.png" alt="">
-        <div class="left-container">
-            <div class="name-stat">Name:</div>
-            <div class="hp-stat">Health:</div>
-            <div class="strength-stat">Strength:</div>
-            <div class="defense-stat">Defense:</div>
-            <div class="skill stat">Skill:</div>
-            <div class="speed-stat">Speed:</div>
+    <div class="container-fluid main">
+       <div class="row health-bars">
+            <div class="col player-health">Player HP:</div>
+            <div class="col enemy-health">Enemy HP:</div>
         </div>
-        <div class="health-bars">
-            <div class="player-health"></div>
-            <div class="enemy-health"></div>
+        <div class="row main-display">
+            <div class="col-sm-3 stats-bar">
+                <div class="row-sm name-stat">Name:</div>
+                <div class="row-sm hp-stat">Health:</div>
+                <div class="row-sm strength-stat">Strength:</div>
+                <div class="row-sm defense-stat">Defense:</div>
+                <div class="row-sm skill-stat">Skill:</div>
+                <div class="row-sm speed-stat">Speed:</div>
+            </div>   
+            <div class="col-md-9 backgroundImg"> 
+                <div class="container player-img"></div>
+                <div class="container enemy-img"></div>
+            </div>   
         </div>
+        <div class="row choices">
+            <div class="col-sm-6 attack-choice">choices</div>
+            <div class="col-sm-6 messages">messages</div>
+        </div>
+
+
+        
 
     </div>
     
