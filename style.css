@@ -26,8 +26,15 @@
 .player-img{
     background-size: contain;
     background-repeat: no-repeat;
+    background-image: url("https://cdn2.vox-cdn.com/uploads/chorus_asset/file/7948219/fire-emblem-heroes-6.0.png");
 }
 .enemy-img{
     background-size: cover;
     background-repeat: no-repeat;
+}
+.split-img{
+    height:50%;
+}
+.split-img2{
+    height: 50%;
 }
