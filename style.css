@@ -24,13 +24,12 @@
     background-repeat: no-repeat;
 }
 .player-img{
-    text-align: center;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("https://cdn2.vox-cdn.com/uploads/chorus_asset/file/7948219/fire-emblem-heroes-6.0.png");
 }
 .enemy-img{
-    text-align: center;
+    
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("https://i.pinimg.com/originals/9e/8c/f4/9e8cf45482819110a8392781cbb2c5cf.png")
