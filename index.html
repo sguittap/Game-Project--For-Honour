@@ -11,11 +11,7 @@
 
 </head>
 <body>
-    <div class="container-fluid main">
-       <div class="row health-bars">
-            <div class="col player-health">Player HP:</div>
-            <div class="col enemy-health">Enemy HP:</div>
-        </div>
+    <div class="container-fluid">
         <div class="row main-display">
             <div class="col-sm-3 stats-bar">
                 <div class="row-sm name-stat">Name:</div>
@@ -25,29 +21,26 @@
                 <div class="row-sm skill-stat">Skill:</div>
                 <div class="row-sm speed-stat">Speed:</div>
             </div>   
-            <div class="col-md-9 backgroundImg"> 
-                    <div class="row split-img"></div>
-                        <div class="row split-img2">
-                            <div class="col-md-4 player-img"></div>
-                            <div class="col-md-4 "></div>
-                            <div class="col-md-4 enemy-img"></div>
-                        </div>
-                    
-            </div>   
+            <div class="col-sm-9 backgroundImg"> 
+                <div class="row split-img"></div>
+                <div class="row split-img2">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4 player-display"></div>
+                    <div class="col-sm-4"></div> 
+                </div>            
+                </div>
+            
         </div>
-        <div class="row choices">
-            <div class="col-sm-6 attack-choice">
-                <button type="button" class="btn btn-primary-left">LEFT</button>
-                <button type="button" class="btn btn-primary-top">TOP</button>
-                <button type="button" class="btn btn-primary-right">RIGHT</button>
-                <button type="button" class="btn btn-primary-dodge">DODGE</button>
-            </div>
-            <div class="col-sm-6 messages">messages</div>
-        </div>
-
-
         
-
+        <div class="row choices1">
+            <div class="col-sm-6 attack-choice">
+                <button type="button" class="btn btn-primary-leftChoice">LEFT</button>
+                <button type="button" class="btn btn-primary-top"></button>
+                <button type="button" class="btn btn-primary-rightChoice">RIGHT</button>
+                <button type="button" class="btn btn-primary-select">Select</button>
+            </div>
+            <div class="col-sm-6 messages">Choose your Hero!</div>
+        </div>
     </div>
     
     
