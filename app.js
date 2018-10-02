@@ -42,7 +42,6 @@ class character {
                 }return;
             
             }else{
-                console.log("passed speed check")
             enemy.hp -= (this.strength + this.strength) - enemy.defense
             $('.messages').append(`${this.name} striked twice in their attack! `);
                 if(enemy.hp <= 0){
@@ -54,14 +53,12 @@ class character {
         else{ 
             
             if(this.magicUser === true){
-                console.log("normal magic attack working")
                 enemy.hp -= this.spAtk - enemy.spDef
                 if(enemy.hp <= 0){
                     enemy.hp = 0;
                 }return;
             }
             else{
-                console.log('passed normal attack')
             enemy.hp -= this.strength - enemy.defense
             if(enemy.hp <= 0){
                 enemy.hp = 0;
@@ -299,7 +296,7 @@ const pickSelectorRight=()=>{
     checkPosition();
 };
 const pickedCharacter=()=>{
-    if(characterSelectorPosition>1){
+    if(characterSelectorPosition >= 0){
         createArena();
     }else{
         $(".messages").text("Choose LEFT or RIGHT to select a Hero!")
