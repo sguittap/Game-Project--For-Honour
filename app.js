@@ -48,12 +48,12 @@ class character {
  
 //random enemy generate
 //spread operator creates a COPY of the object
-const enemyChar = {...charSelection[Math.floor(Math.random()*charSelection.length)]};
+const enemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelection.length)]);
 
 //display health
 const updateHealth=()=>{
-    $('.player-health').append("Player HP: " + playerChar.hp)
-    $('.enemy-health').append("Enemy HP: " + enemyChar.hp)
+    $('.player-health').append(`${playerChar.name} HP: ${playerChar.hp}`)
+    $('.enemy-health').append(`${enemyChar.name} HP: ${enemyChar.hp}`)
     }
 
 //computer clashNumber
@@ -85,12 +85,14 @@ const checkWinOrLose=()=>{
         $('.messages,').empty()
         $('.player-hp').empty()
         $('.enemy-hp').empty()
+        $('.player-img').empty()
     };
     if(enemyChar.hp === 0){
         alert('You won!')
         $('.messages').empty()
         $('.player-health').empty()
         $('.enemy-health').empty()
+        $('.enemy-img').empty()
     }
 }
 //animation
@@ -124,7 +126,6 @@ const battle=()=>{
     console.log(playerClash, enemyClash)
 };
 
-
 //clear health and message display
 const clearDisplays=()=>{
     $('.player-health').empty()
@@ -136,8 +137,8 @@ const createArena=()=>{
 $('.container-fluid').empty()
 //create health bars
 $('.container-fluid').append('<div class="row health-bars"></div>')
-$('.health-bars').append('<div class="col player-health">Player HP:</div>')
-$('.health-bars').append('<div class="col enemy-health">Enemy HP:</div>')
+$('.health-bars').append(`<div class="col player-health">${playerChar.name} HP:</div>`)
+$('.health-bars').append(`<div class="col enemy-health">${enemyChar.name} HP:</div>`)
 //create arena
 $('.container-fluid').append('<div class="row arenaDisplay"></div>')
 $('.arenaDisplay').append('<div class="col backgroundImg2"></div>')
