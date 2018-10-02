@@ -17,9 +17,9 @@ class character {
 };
 
 //character creation: name, hp, strength, defense, skill, speed, limitBreak
- const warrior = new character("Gunter", 15, 2, 1, 1, 3, 'warrior');
- const rogue = new character("Kaze", 7, 4, 4, 3, 6, 'rogue');
- const lancer = new character("Selena", 15, 3, 1, 2, 2, 'lancer');
+ const warrior = new character("Gunter", 15, 2, 1, 1, 3, 'Warrior');
+ const rogue = new character("Kaze", 15, 3, 1, 3, 6, 'Rogue');
+ const lancer = new character("Selena", 15, 3, 1, 2, 2, 'Lancer');
  //character select Array
  const charSelection = [warrior, rogue, lancer];
 
@@ -95,6 +95,30 @@ const battle=()=>{
     console.log(playerClash, enemyClash)
 };
 
+//add player selected char to arena
+const popPlayerImg=()=>{
+    if(playerChar === warrior){
+        $('.player-img').addClass('warrior')
+    }
+    else if(playerChar === rogue){
+        $('.player-img').addClass('rogue')
+    }else{
+        $('.player-img').addClass('lancer')
+    }
+};
+
+//add enemy image to arena
+const popEnemyImg=()=>{
+    if(enemyChar === warrior){
+        $('.enemy-img').addClass('warrior')
+    }
+    else if(enemyChar === rogue){
+        $('.enemy-img').addClass('rogue')
+    }else{
+        $('.enemy-img').addClass('lancer')
+    }
+};
+
 //clear health and message display
 const clearDisplays=()=>{
     $('.player-health').empty()
@@ -109,26 +133,26 @@ $('.container-fluid').append('<div class="row health-bars"></div>')
 $('.health-bars').append('<div class="col player-health">Player HP:</div>')
 $('.health-bars').append('<div class="col enemy-health">Enemy HP:</div>')
 //create arena
-$('.container-fluid').append('<div class="col-md-12 backgroundImg2"></div>')
+$('.container-fluid').append('<div class="row arenaDisplay"></div>')
+$('.arenaDisplay').append('<div class="col backgroundImg2"></div>')
 $('.backgroundImg2').addClass("backgroundImg")
 $('.backgroundImg2').append('<div class="row top-half"></div>')
 $('.backgroundImg2').append('<div class="row bottom-half"></div>')
 $('.top-half').addClass("split-img")
 $('.bottom-half').addClass("split-img2")
-$('.split-img2').append('<div class="col-md-4 player-img"></div>')
-$('.split-img2').append('<div class="col-md-4 "></div>')
-$('.split-img2').append('<div class="col-md-4 enemy-img"></div>')
-//add player selection to the arena
-console.log(playerChar.type)
-console.log(enemyChar.type);
-//
+$('.split-img2').append('<div class="col-md-3 "></div>')
+$('.split-img2').append('<div class="col-md-3 player-img"></div>')
+$('.split-img2').append('<div class="col-md-3 "></div>')
+$('.split-img2').append('<div class="col-md-3 enemy-img"></div>')
+popPlayerImg();
+popEnemyImg();
 //create action buttons
 $('.container-fluid').append('<div class="row choices2"></div>')
 $('.choices2').append('<div class="col-sm-6 attack-choice"></div>')
 $('.attack-choice').append('<button type="button" class="btn btn-primary-left">LEFT</button>')
 $('.attack-choice').append('<button type="button" class="btn btn-primary-top">TOP</button>')
 $('.attack-choice').append('<button type="button" class="btn btn-primary-right">RIGHT</button>')
-$('.attack-choice').append('<button type="button" class="btn btn-primary-Dodge">Dodge</button>')
+$('.attack-choice').append('<button type="button" class="btn btn-primary-dodge">Dodge</button>')
 //create message bar
 $('.choices2').append('<div class="col-sm-6 messages">Choose your Attack!</div>')
 
@@ -151,28 +175,41 @@ $('.btn-primary-right').on("click", function(){
     battle();
 });
 
-$('.btn-primary-select').on("click", function(){
+$('.btn-primary-dodge').on("click", function(){
     playerClash = 4;
     clearDisplays();
     battle();
 });
 };
 
+//display stats
+const displayStatsOnScreen=()=>{
+    $('.name-stat').append(playerChar.name)
+    $('.hp-stat').append(playerChar.hp)
+    $('.strength-stat').append(playerChar.strength)
+    $('.defense-stat').append(playerChar.defense)
+    $('.skill-stat').append(playerChar.skill)
+    $('.speed-stat').append(playerChar.speed)
+    $('.typeClass').append(playerChar.type)
+};
+
 //pickSelector cycles through characters to choose
 let characterSelectorPosition = 1;
-
 const checkPosition=()=>{
     if(characterSelectorPosition === 1){
         $(".player-display").addClass("warrior")
         playerChar = warrior;
+        displayStatsOnScreen();
     }
     else if(characterSelectorPosition === 2){
         $(".player-display").addClass("rogue")
         playerChar = rogue
+        displayStatsOnScreen();
     }
     else{
         $(".player-display").addClass("lancer")
         playerChar = lancer
+        displayStatsOnScreen()
     }
 };
 const pickSelectorLeft=()=>{
@@ -201,6 +238,13 @@ const clearHero=()=>{
     $('.player-display').removeClass("warrior")
     $('.player-display').removeClass("rogue")
     $('.player-display').removeClass("lancer")
+    $('.name-stat').text("Name: ")
+    $('.hp-stat').text("HP: ")
+    $('.strength-stat').text("Strength: ")
+    $('.defense-stat').text("Defense: ")
+    $('.skill-stat').text("Skill: ")
+    $('.speed-stat').text("Speed: ")
+    $('.typeClass').text("Class: ")
 };
 
 //character select buttons

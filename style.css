@@ -26,6 +26,7 @@
     background-image: url("http://smashbros-miiverse.com/images/stages/w300/arena-ferox.png");
     background-size: cover;
     background-repeat: no-repeat;
+    height:150px;
 }
 .split-img{
     height:50%;
@@ -36,17 +37,21 @@
 .warrior{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("https://i.pinimg.com/originals/9e/8c/f4/9e8cf45482819110a8392781cbb2c5cf.png")
+    background-image: url("https://i.pinimg.com/originals/9e/8c/f4/9e8cf45482819110a8392781cbb2c5cf.png");
+    text-align: center; 
 }
 
 .lancer{
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("https://cdn2.vox-cdn.com/uploads/chorus_asset/file/7948219/fire-emblem-heroes-6.0.png");
+    text-align: center; 
+
 }
 .rogue{
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("http://vignette2.wikia.nocookie.net/fireemblem/images/1/13/Chrom_(FE13_Artwork).png/revision/latest?cb=20130407081644");
 }
+
 
