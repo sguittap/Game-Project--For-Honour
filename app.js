@@ -2,6 +2,7 @@ class character {
     constructor(name, hp, strength, defense, skill, speed, type){
     this.name = name;
     this.hp = hp;
+    this.originalHp = hp;
     this.strength = strength;
     this.defense = defense;
     this.skill = skill;
@@ -37,7 +38,7 @@ class character {
 };
 
 //character creation: name, hp, strength, defense, skill, speed, limitBreak
- const warrior = new character("Gunter", 15, 2, 1, 1, 3, 'warrior');
+ const warrior = new character("Hilda", 15, 2, 1, 1, 3, 'warrior');
  const rogue = new character("Kaze", 15, 3, 1, 3, 6, 'rogue');
  const lancer = new character("Selena", 15, 3, 1, 2, 2, 'lancer');
  //character select Array
@@ -52,9 +53,27 @@ const enemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelec
 
 //display health
 const updateHealth=()=>{
-    $('.player-health').append(`${playerChar.name} HP: ${playerChar.hp}`)
-    $('.enemy-health').append(`${enemyChar.name} HP: ${enemyChar.hp}`)
+    // $('.player-health').append(`${playerChar.name} HP: ${playerChar.hp}`)
+    // $('.enemy-health').append(`${enemyChar.name} HP: ${enemyChar.hp}`)
+
+    const updatePlayerHealthBar = () => {
+        let numHp = (playerChar.hp / playerChar.originalHp) * 100;
+        let percentHp = `${numHp}%`;
+        $('.playerBar').css("width", percentHp);
     }
+updatePlayerHealthBar();
+
+    const updateEnemyHealthBar = () => {
+        let numHp = (enemyChar.hp / enemyChar.originalHp) * 100;
+        let percentHp = `${numHp}%`;
+        $('.enemyBar').css("width", percentHp);
+    }
+updateEnemyHealthBar();
+}
+
+
+
+
 
 //computer clashNumber
 let enemyClash = 0;
@@ -92,7 +111,7 @@ const checkWinOrLose=()=>{
         $('.messages').empty()
         $('.player-health').empty()
         $('.enemy-health').empty()
-        $('.enemy-img').empty()
+        $('.enemy-img').empty();
     }
 }
 //animation
@@ -136,9 +155,15 @@ const clearDisplays=()=>{
 const createArena=()=>{
 $('.container-fluid').empty()
 //create health bars
+$('.container-fluid').append('<div class="row name-display"></div>')
+$('.name-display').append(`<div class="col player-name">${playerChar.name} the ${playerChar.type}</div>`)
+$('.name-display').append(`<div class="col enemy-name">${enemyChar.name} the ${enemyChar.type}</div>`)
 $('.container-fluid').append('<div class="row health-bars"></div>')
-$('.health-bars').append(`<div class="col player-health">${playerChar.name} HP:</div>`)
-$('.health-bars').append(`<div class="col enemy-health">${enemyChar.name} HP:</div>`)
+$('.health-bars').append('<div class="col health-bar1">')
+$('.health-bar1').append('<div class="progress"><div class="progress-bar playerBar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div></div>')
+$('.health-bars').append('<div class="col health-bar2">')
+$('.health-bar2').append('<div class="progress"><div class="progress-bar enemyBar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div></div>')
+updateHealth();
 //create arena
 $('.container-fluid').append('<div class="row arenaDisplay"></div>')
 $('.arenaDisplay').append('<div class="col backgroundImg2"></div>')
@@ -149,8 +174,7 @@ $('.split-img2').append('<div class="col-md-3 "></div>')
 $('.split-img2').append('<div class="col-md-3 player-img"></div>')
 $('.split-img2').append('<div class="col-md-3 "></div>')
 $('.split-img2').append('<div class="col-md-3 enemy-img"></div>')
-// popPlayerImg();
-// popEnemyImg();
+//dislay heros in arena
 $('.player-img').addClass(playerChar.type)
 $('.enemy-img').addClass(enemyChar.type)
 //create action buttons
@@ -237,6 +261,7 @@ const pickSelectorRight=()=>{
 };
 const pickedCharacter=()=>{
     createArena();
+
 };
 
 //clear hero class from player-display window

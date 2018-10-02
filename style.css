@@ -32,7 +32,7 @@
     border-radius: 5px
     
 }
-.player-health{
+.player-name{
     background-color:rgba(0, 72, 255, 0.447);
     border-style: solid;
     border-width: 3px;
@@ -40,13 +40,16 @@
     border-radius: 5px;
     height: 30px;
 }
-.enemy-health{
+.enemy-name{
     background-color:rgba(0, 72, 255, 0.447);
     border-style: solid;
     border-width: 3px;
     border-color: rgb(118, 113, 113);
     border-radius: 5px;
     height: 30px;
+}
+.playerBar, .enemyBar{
+width:100%;
 }
 .btn-primary-leftChoice:hover{
     margin-right: 1%;
