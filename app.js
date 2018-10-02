@@ -1,5 +1,5 @@
 class character {
-    constructor(name, hp, strength, defense, skill, speed, type){
+    constructor(name, hp, strength, defense, skill, speed, spAtk, spDef, limit, type){
     this.name = name;
     this.hp = hp;
     this.originalHp = hp;
@@ -7,6 +7,9 @@ class character {
     this.defense = defense;
     this.skill = skill;
     this.speed = speed;
+    this.spStk = spAtk;
+    this.spDef = spDef;
+    this.limit = limit
     this.type = type;
     }
     attack (enemy){
@@ -20,7 +23,7 @@ class character {
             return;
         }
         //check speed hit
-        else if(this.speed % enemy.speed === 0){
+        else if(Math.floor(Math.random()*10) < this.speed){
             enemy.hp -= (this.strength + this.strength) - enemy.defense
             $('.messages').append(`${this.name} striked twice in their attack! `);
             if(enemy.hp <= 0){
@@ -37,12 +40,14 @@ class character {
     }
 };
 
-//character creation: name, hp, strength, defense, skill, speed, limitBreak
- const warrior = new character("Hilda", 15, 2, 1, 1, 3, 'warrior');
- const rogue = new character("Kaze", 15, 3, 1, 3, 6, 'rogue');
- const lancer = new character("Selena", 15, 3, 1, 2, 2, 'lancer');
+//character creation: name, hp, strength, defense, skill, speed, special attack, special def, limitBreak
+ const warrior = new character("Hector", 20, 5, 4, 2, 1, 1, 1, 'warrior');
+ const rogue = new character("Kaze", 20, 4, 1, 3, 4, 1, 3, 'rogue');
+ const lancer = new character("Selena", 20, 4, 2, 2, 2, 1, 2, 'lancer');
+ const mage = new character("Linde", 20, 1, 2, 3, 2, 4, 4, 'mage')
+ const rider = new character("Minerva", 20, 4, 3, 2, 3, 1, 3, 'rider')
  //character select Array
- const charSelection = [warrior, rogue, lancer];
+ const charSelection = [warrior, rogue, lancer, mage, rider];
 
  //character selection
  let playerChar = 0;
@@ -237,6 +242,16 @@ const checkPosition=()=>{
         playerChar = rogue
         displayStatsOnScreen();
     }
+    else if(characterSelectorPosition === 3){
+        $(".player-display").addClass("mage")
+        playerChar = mage
+        displayStatsOnScreen();
+    }
+    else if(characterSelectorPosition === 4){
+        $(".player-display").addClass("rider")
+        playerChar = rider
+        displayStatsOnScreen();
+    }
     else{
         $(".player-display").addClass("lancer")
         playerChar = lancer
@@ -252,8 +267,8 @@ const pickSelectorLeft=()=>{
     checkPosition();
 };
 const pickSelectorRight=()=>{
-    if(characterSelectorPosition >= 3){
-        characterSelectorPosition = 3
+    if(characterSelectorPosition >= 5){
+        characterSelectorPosition = 5
     }else{
         characterSelectorPosition += 1;
     }
@@ -269,6 +284,8 @@ const clearHero=()=>{
     $('.player-display').removeClass("warrior")
     $('.player-display').removeClass("rogue")
     $('.player-display').removeClass("lancer")
+    $('.player-display').removeClass("mage")
+    $('.player-display').removeClass("rider")
     $('.name-stat').text("Name: ")
     $('.hp-stat').text("Health: ")
     $('.strength-stat').text("Strength: ")

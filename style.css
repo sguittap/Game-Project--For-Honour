@@ -51,21 +51,21 @@
 .playerBar, .enemyBar{
 width:100%;
 }
-.btn-primary-leftChoice:hover{
+.btn-primary-leftChoice{
     margin-right: 1%;
-    background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);
+    /* background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);
     background-image: -moz-linear-gradient(top, #2079b0, #eb94d0);
     background-image: -ms-linear-gradient(top, #2079b0, #eb94d0);
     background-image: -o-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: linear-gradient(to bottom, #2079b0, #eb94d0);
+    background-image: linear-gradient(to bottom, #2079b0, #eb94d0); */
 }
-.btn-primary-rightChoice:hover{
+.btn-primary-rightChoice{
     margin-right: 1%;
-    background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);
+    /* background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);
     background-image: -moz-linear-gradient(top, #2079b0, #eb94d0);
     background-image: -ms-linear-gradient(top, #2079b0, #eb94d0);
     background-image: -o-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: linear-gradient(to bottom, #2079b0, #eb94d0);
+    background-image: linear-gradient(to bottom, #2079b0, #eb94d0); */
 }
 .btn-primary-left{
     margin-right: 1%;
@@ -100,21 +100,25 @@ width:100%;
 .warrior{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("https://i.pinimg.com/originals/9e/8c/f4/9e8cf45482819110a8392781cbb2c5cf.png");
-     
+    background-image: url("https://vignette.wikia.nocookie.net/fireemblem/images/c/c4/FEH_Hector_%28Legendary_Heroes%29_Heroes.png/revision/latest?cb=20180628055531"); 
 }
-
 .lancer{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("https://cdn2.vox-cdn.com/uploads/chorus_asset/file/7948219/fire-emblem-heroes-6.0.png");
-    
-
+    background-image: url("http://static.tumblr.com/26dd7a39019c349ab52603d2a6c62810/tqntp1b/s3Zo9k2uv/tumblr_static_8fltg87akk4ckg4k0wc40ck80.png");
 }
 .rogue{
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("http://vignette2.wikia.nocookie.net/fireemblem/images/1/13/Chrom_(FE13_Artwork).png/revision/latest?cb=20130407081644");
 }
-
-
+.mage{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image:url("https://vignette.wikia.nocookie.net/fireemblem/images/b/bc/Leon_art.png/revision/latest?cb=20170503223412");
+}
+.rider{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image:url('https://fireemblemwiki.org/w/images/2/26/FEFT_Thea.png');
+}
