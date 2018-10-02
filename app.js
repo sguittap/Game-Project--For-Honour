@@ -9,17 +9,37 @@ class character {
     this.type = type;
     }
     attack (enemy){
-        enemy.hp -= this.strength - enemy.defense
-        if(enemy.hp <= 0){
-            enemy.hp = 0;
+        //check skill hit
+        if(Math.floor(Math.random()*10) < this.skill){
+            enemy.hp -= this.strength
+            $('.messages').append(`${this.name} landed a critical blow in their attack! `);
+            if(enemy.hp <= 0){
+                enemy.hp = 0;
+            }
+            return;
+        }
+        //check speed hit
+        else if(this.speed % enemy.speed === 0){
+            enemy.hp -= (this.strength + this.strength) - enemy.defense
+            $('.messages').append(`${this.name} striked twice in their attack! `);
+            if(enemy.hp <= 0){
+                enemy.hp = 0;
+            }
+            return;
+        //normal attack
+        }else{ 
+            enemy.hp -= this.strength - enemy.defense
+            if(enemy.hp <= 0){
+                enemy.hp = 0;
+            }
         }
     }
 };
 
 //character creation: name, hp, strength, defense, skill, speed, limitBreak
- const warrior = new character("Gunter", 15, 2, 1, 1, 3, 'Warrior');
- const rogue = new character("Kaze", 15, 3, 1, 3, 6, 'Rogue');
- const lancer = new character("Selena", 15, 3, 1, 2, 2, 'Lancer');
+ const warrior = new character("Gunter", 15, 2, 1, 1, 3, 'warrior');
+ const rogue = new character("Kaze", 15, 3, 1, 3, 6, 'rogue');
+ const lancer = new character("Selena", 15, 3, 1, 2, 2, 'lancer');
  //character select Array
  const charSelection = [warrior, rogue, lancer];
 
@@ -27,15 +47,15 @@ class character {
  let playerChar = 0;
  
 //random enemy generate
-const enemyChar = charSelection[Math.floor(Math.random()*charSelection.length)];
-
+//spread operator creates a COPY of the object
+const enemyChar = {...charSelection[Math.floor(Math.random()*charSelection.length)]};
 
 //display health
 const updateHealth=()=>{
     $('.player-health').append("Player HP: " + playerChar.hp)
     $('.enemy-health').append("Enemy HP: " + enemyChar.hp)
+    }
 
-}
 //computer clashNumber
 let enemyClash = 0;
 const compChoice=()=>{
@@ -62,31 +82,40 @@ let playerClash = 0;
 const checkWinOrLose=()=>{
     if(playerChar.hp === 0){
         alert('You Died')
+        $('.messages,').empty()
+        $('.player-hp').empty()
+        $('.enemy-hp').empty()
     };
     if(enemyChar.hp === 0){
         alert('You won!')
+        $('.messages').empty()
+        $('.player-health').empty()
+        $('.enemy-health').empty()
     }
 }
+//animation
+const PlayerSuccessDodge=()=>{
 
+}
 //battle function
 const battle=()=>{
     compChoice()
     if(playerClash === 4 && enemyClash === 4){
         $('.messages').append("Both of you took defensive positions");
     }else if(enemyClash === 4 && playerClash !== 2){
-        $('.messages').append("enemy dodged your attack!")
+        $('.messages').append("Enemy dodged your attack!")
     }else if(enemyClash === 4 && playerClash === 2){
-        $('.messages').append("enemy tried to dodge but failed")
         playerChar.attack(enemyChar);
+        $('.messages').append("Enemy tried to dodge but failed")
     }else if(playerClash === 4 && enemyClash !== 2){
-        $('.messages').append("you dodged their attack!")
+        $('.messages').append("You dodged their attack!")
     }else if(playerClash === 4 && enemyClash === 2){
-        $('.messages').append("you tried to dodge but failed")
-        enemyChar.attack(playerChar);
+        enemyChar.attack(playerChar)
+        $('.messages').append("You tried to dodge but failed")
     }else if(playerClash !== enemyClash){
-        $('.messages').append("you damage each other")
         playerChar.attack(enemyChar)
         enemyChar.attack(playerChar)
+        $('.messages').append("Blood was shed..")
     }else{
         $('.messages').append("Your swords clashed, no damage dealt.")
     }
@@ -95,29 +124,6 @@ const battle=()=>{
     console.log(playerClash, enemyClash)
 };
 
-//add player selected char to arena
-const popPlayerImg=()=>{
-    if(playerChar === warrior){
-        $('.player-img').addClass('warrior')
-    }
-    else if(playerChar === rogue){
-        $('.player-img').addClass('rogue')
-    }else{
-        $('.player-img').addClass('lancer')
-    }
-};
-
-//add enemy image to arena
-const popEnemyImg=()=>{
-    if(enemyChar === warrior){
-        $('.enemy-img').addClass('warrior')
-    }
-    else if(enemyChar === rogue){
-        $('.enemy-img').addClass('rogue')
-    }else{
-        $('.enemy-img').addClass('lancer')
-    }
-};
 
 //clear health and message display
 const clearDisplays=()=>{
@@ -142,15 +148,17 @@ $('.split-img2').append('<div class="col-md-3 "></div>')
 $('.split-img2').append('<div class="col-md-3 player-img"></div>')
 $('.split-img2').append('<div class="col-md-3 "></div>')
 $('.split-img2').append('<div class="col-md-3 enemy-img"></div>')
-popPlayerImg();
-popEnemyImg();
+// popPlayerImg();
+// popEnemyImg();
+$('.player-img').addClass(playerChar.type)
+$('.enemy-img').addClass(enemyChar.type)
 //create action buttons
 $('.container-fluid').append('<div class="row choices2"></div>')
 $('.choices2').append('<div class="col-sm-6 attack-choice"></div>')
-$('.attack-choice').append('<button type="button" class="btn btn-primary-left">LEFT</button>')
-$('.attack-choice').append('<button type="button" class="btn btn-primary-top">TOP</button>')
-$('.attack-choice').append('<button type="button" class="btn btn-primary-right">RIGHT</button>')
-$('.attack-choice').append('<button type="button" class="btn btn-primary-dodge">Dodge</button>')
+$('.attack-choice').append('<button type="button" class="btn btn-primary-left btn-sm">LEFT</button>')
+$('.attack-choice').append('<button type="button" class="btn btn-primary-top btn-sm">TOP</button>')
+$('.attack-choice').append('<button type="button" class="btn btn-primary-right btn-sm">RIGHT</button>')
+$('.attack-choice').append('<button type="button" class="btn btn-primary-dodge btn-sm">Dodge</button>')
 //create message bar
 $('.choices2').append('<div class="col-sm-6 messages">Choose your Attack!</div>')
 
@@ -228,8 +236,7 @@ const pickSelectorRight=()=>{
 };
 const pickedCharacter=()=>{
     createArena();
-    
-}
+};
 
 //clear hero class from player-display window
 const clearHero=()=>{
@@ -237,7 +244,7 @@ const clearHero=()=>{
     $('.player-display').removeClass("rogue")
     $('.player-display').removeClass("lancer")
     $('.name-stat').text("Name: ")
-    $('.hp-stat').text("HP: ")
+    $('.hp-stat').text("Health: ")
     $('.strength-stat').text("Strength: ")
     $('.defense-stat').text("Defense: ")
     $('.skill-stat').text("Skill: ")
