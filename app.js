@@ -1,51 +1,82 @@
 class character {
-    constructor(name, hp, strength, defense, skill, speed, spAtk, spDef, limit, type){
+    constructor(name,type, magicUser, hp, strength, defense, skill, speed, spAtk, spDef, ){
     this.name = name;
     this.hp = hp;
+    this.type = type;
+    this.magicUser = magicUser;
     this.originalHp = hp;
     this.strength = strength;
     this.defense = defense;
     this.skill = skill;
     this.speed = speed;
-    this.spStk = spAtk;
+    this.spAtk = spAtk;
     this.spDef = spDef;
-    this.limit = limit
-    this.type = type;
     }
     attack (enemy){
         //check skill hit
         if(Math.floor(Math.random()*10) < this.skill){
-            enemy.hp -= this.strength
-            $('.messages').append(`${this.name} landed a critical blow in their attack! `);
-            if(enemy.hp <= 0){
-                enemy.hp = 0;
+            if(this.magicUser === true){
+                enemy.hp -= this.spAtk
+                $('.messages').append(`${this.name} landed a critical blow in their attack! `);
+                if(enemy.hp <= 0){
+                    enemy.hp = 0;
+                }return;
+            
+            }else{ 
+                console.log("passed skill check")
+                enemy.hp -= this.strength
+                $('.messages').append(`${this.name} landed a critical blow in their attack! `);
+                if(enemy.hp <= 0){
+                    enemy.hp = 0;
+                }return; 
             }
-            return;
         }
+
         //check speed hit
         else if(Math.floor(Math.random()*10) < this.speed){
+            if(this.magicUser === true){
+                enemy.hp -= (this.spAtk + this.spAtk) - enemy.spDef
+                $('.messages').append(`${this.name} striked twice in their attack! `);
+                if(enemy.hp <= 0){
+                    enemy.hp = 0;
+                }return;
+            
+            }else{
+                console.log("passed speed check")
             enemy.hp -= (this.strength + this.strength) - enemy.defense
             $('.messages').append(`${this.name} striked twice in their attack! `);
-            if(enemy.hp <= 0){
-                enemy.hp = 0;
+                if(enemy.hp <= 0){
+                    enemy.hp = 0;
+                }return;
             }
-            return;
+        }   
         //normal attack
-        }else{ 
+        else{ 
+            
+            if(this.magicUser === true){
+                console.log("normal magic attack working")
+                enemy.hp -= this.spAtk - enemy.spDef
+                if(enemy.hp <= 0){
+                    enemy.hp = 0;
+                }return;
+            }
+            else{
+                console.log('passed normal attack')
             enemy.hp -= this.strength - enemy.defense
             if(enemy.hp <= 0){
                 enemy.hp = 0;
-            }
+                }
+            }    
         }
     }
 };
 
-//character creation: name, hp, strength, defense, skill, speed, special attack, special def, limitBreak
- const warrior = new character("Hector", 20, 5, 4, 2, 1, 1, 1, 'warrior');
- const rogue = new character("Kaze", 20, 4, 1, 3, 4, 1, 3, 'rogue');
- const lancer = new character("Selena", 20, 4, 2, 2, 2, 1, 2, 'lancer');
- const mage = new character("Linde", 20, 1, 2, 3, 2, 4, 4, 'mage')
- const rider = new character("Minerva", 20, 4, 3, 2, 3, 1, 3, 'rider')
+//character creation: name, hp, strength, defense, skill, speed, special attack, special def, 
+ const warrior = new character("Hector",'warrior', false, 20, 5, 4, 2, 1, 1, 1, );
+ const rogue = new character("Kaze",'rogue',false, 20, 4, 1, 3, 4, 1, 3, );
+ const lancer = new character("Selena",'lancer', false, 20, 4, 2, 2, 2, 1, 2, );
+ const mage = new character("Linde",'mage', true, 20, 1, 2, 3, 2, 4, 4, )
+ const rider = new character("Minerva",'rider', false, 20, 4, 3, 2, 3, 1, 3, )
  //character select Array
  const charSelection = [warrior, rogue, lancer, mage, rider];
 
@@ -56,11 +87,8 @@ class character {
 //spread operator creates a COPY of the object
 const enemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelection.length)]);
 
-//display health
+//update health bars
 const updateHealth=()=>{
-    // $('.player-health').append(`${playerChar.name} HP: ${playerChar.hp}`)
-    // $('.enemy-health').append(`${enemyChar.name} HP: ${enemyChar.hp}`)
-
     const updatePlayerHealthBar = () => {
         let numHp = (playerChar.hp / playerChar.originalHp) * 100;
         let percentHp = `${numHp}%`;
@@ -75,10 +103,6 @@ updatePlayerHealthBar();
     }
 updateEnemyHealthBar();
 }
-
-
-
-
 
 //computer clashNumber
 let enemyClash = 0;
@@ -143,7 +167,7 @@ const battle=()=>{
         enemyChar.attack(playerChar)
         $('.messages').append("Blood was shed..")
     }else{
-        $('.messages').append("Your swords clashed, no damage dealt.")
+        $('.messages').append("You clashed weapons, no damage dealt.")
     }
     updateHealth();
     checkWinOrLose();
@@ -230,7 +254,7 @@ const displayStatsOnScreen=()=>{
 };
 
 //pickSelector cycles through characters to choose
-let characterSelectorPosition = 1;
+let characterSelectorPosition = 0;
 const checkPosition=()=>{
     if(characterSelectorPosition === 1){
         $(".player-display").addClass("warrior")
@@ -275,7 +299,13 @@ const pickSelectorRight=()=>{
     checkPosition();
 };
 const pickedCharacter=()=>{
-    createArena();
+    if(characterSelectorPosition>1){
+        createArena();
+    }else{
+        $(".messages").text("Choose LEFT or RIGHT to select a Hero!")
+
+    }
+    
 
 };
 
