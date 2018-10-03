@@ -80,6 +80,12 @@ width:100%;
 .btn-primary-right{
     margin-right: 1%;
 }
+.dodge{
+    margin-right: 1%;
+}
+.super{
+    margin-right: 1%;
+}
 .backgroundImg{
     background-image: url("http://smashbros-miiverse.com/images/stages/w300/arena-ferox.png");
     background-size: cover;
