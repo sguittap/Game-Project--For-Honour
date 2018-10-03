@@ -1,4 +1,8 @@
-
+.mirror {
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+ }
 
 .stats-bar {
     background-color:rgba(0, 72, 255, 0.447);
@@ -91,34 +95,73 @@ width:100%;
 .dead{
 
 }
+/* .choices2{
+    height:50px;
+} */
 .split-img{
     height:50%;
 }
 .split-img2{
     height: 100%;
 }
-.warrior{
+/* Warrior Attack Animation */
+.knight{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("https://vignette.wikia.nocookie.net/fireemblem/images/c/c4/FEH_Hector_%28Legendary_Heroes%29_Heroes.png/revision/latest?cb=20180628055531"); 
+    background-image: url("http://www.feplanet.net/media/sprites/6/battle/animations/npc/critical/hector_general_axe.gif");
 }
-.lancer{
+.knightAttack{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("http://static.tumblr.com/26dd7a39019c349ab52603d2a6c62810/tqntp1b/s3Zo9k2uv/tumblr_static_8fltg87akk4ckg4k0wc40ck80.png");
+    background-image: url("http://www.feplanet.net/media/sprites/6/battle/animations/npc/hector_general_axe.gif");
 }
+
+/* Lancer Attack Animation */
+.archer{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("http://www.feplanet.net/media/sprites/8/battle/animations/ally/critical/neimi_sniper_bow.gif");
+}
+.archerAttack{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("http://www.feplanet.net/media/sprites/8/battle/animations/ally/neimi_sniper_bow.gif");
+}
+
+/* Rogue Attack Animation */
 .rogue{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("http://vignette2.wikia.nocookie.net/fireemblem/images/1/13/Chrom_(FE13_Artwork).png/revision/latest?cb=20130407081644");
+    background-image: url("http://www.feplanet.net/media/sprites/7/battle/animations/ally/critical/jaffar_assassin_sword.gif");
 }
+.rogueAttack{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("http://www.feplanet.net/media/sprites/7/battle/animations/ally/jaffar_assassin_sword.gif");
+}
+
+/* Mage Attack Animation */
 .mage{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image:url("https://vignette.wikia.nocookie.net/fireemblem/images/b/bc/Leon_art.png/revision/latest?cb=20170503223412");
+    background-image:url("http://www.feplanet.net/media/sprites/7/battle/animations/enemy/critical/limstella_sage_magic.gif")
+
 }
+.mageAttack{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image:url("http://www.feplanet.net/media/sprites/7/battle/animations/enemy/limstella_sage_magic.gif");
+}
+
+/* Rider Attack Animation */
 .rider{
     background-size: contain;
     background-repeat: no-repeat;
-    background-image:url('https://fireemblemwiki.org/w/images/2/26/FEFT_Thea.png');
+    background-image:url("http://www.feplanet.net/media/sprites/8/battle/animations/ally/critical/vanessa_pegasusknight_lance.gif")
 }
+.riderAttack{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image:url("http://www.feplanet.net/media/sprites/8/battle/animations/ally/vanessa_pegasusknight_lance.gif")
+}
+

@@ -1,3 +1,5 @@
+
+
 class character {
     constructor(name,type, magicUser, hp, strength, defense, skill, speed, spAtk, spDef, ){
     this.name = name;
@@ -23,7 +25,6 @@ class character {
                 }return;
             
             }else{ 
-                console.log("passed skill check")
                 enemy.hp -= this.strength
                 $('.messages').append(`${this.name} landed a critical blow in their attack! `);
                 if(enemy.hp <= 0){
@@ -69,13 +70,13 @@ class character {
 };
 
 //character creation: name, hp, strength, defense, skill, speed, special attack, special def, 
- const warrior = new character("Hector",'warrior', false, 20, 5, 4, 2, 1, 1, 1, );
+ const knight = new character("Hector",'knight', false, 20, 5, 4, 2, 1, 1, 1, );
  const rogue = new character("Kaze",'rogue',false, 20, 4, 1, 3, 4, 1, 3, );
- const lancer = new character("Selena",'lancer', false, 20, 4, 2, 2, 2, 1, 2, );
+ const archer = new character("Selena",'archer', false, 20, 4, 2, 2, 2, 1, 2, );
  const mage = new character("Linde",'mage', true, 20, 1, 2, 3, 2, 4, 4, )
  const rider = new character("Minerva",'rider', false, 20, 4, 3, 2, 3, 1, 3, )
  //character select Array
- const charSelection = [warrior, rogue, lancer, mage, rider];
+ const charSelection = [knight, rogue, archer, mage, rider];
 
  //character selection
  let playerChar = 0;
@@ -130,7 +131,9 @@ const checkWinOrLose=()=>{
         $('.messages,').empty()
         $('.player-hp').empty()
         $('.enemy-hp').empty()
-        $('.player-img').empty()
+        $('.player-img').removeClass(`${playerChar.type}Attack`)
+        $('.enemy-img').removeClass(`${enemyChar.type}Attack`)
+
     };
     if(enemyChar.hp === 0){
         alert('You won!')
@@ -138,12 +141,12 @@ const checkWinOrLose=()=>{
         $('.player-health').empty()
         $('.enemy-health').empty()
         $('.enemy-img').empty();
+        $('.player-img').removeClass(`${playerChar.type}Attack`)
+        $('.enemy-img').removeClass(`${enemyChar.type}Attack`)
     }
 }
-//animation
-const PlayerSuccessDodge=()=>{
 
-}
+
 //battle function
 const battle=()=>{
     compChoice()
@@ -177,6 +180,24 @@ const clearDisplays=()=>{
     $('.enemy-health').empty()
     $('.messages').empty()
 };
+
+//Animate character to arena
+const animatePlayerHero=()=>{
+
+    for(let i=0; i<charSelection.length; i++){
+        if(playerChar === charSelection[i]){
+            $(".player-img").addClass(`${playerChar.type}Attack`).addClass("mirror")
+        }
+    }
+}
+const animateEnemyHero=()=>{
+    for(let i=0; i<charSelection.length; i++){
+        if(enemyChar === charSelection[i]){
+            $(".enemy-img").addClass(`${enemyChar.type}Attack`)
+        }
+    }
+}
+
 //Create Arena
 const createArena=()=>{
 $('.container-fluid').empty()
@@ -198,11 +219,11 @@ $('.backgroundImg2').append('<div class="row bottom-half"></div>')
 $('.bottom-half').addClass("split-img2")
 $('.split-img2').append('<div class="col-md-3 "></div>')
 $('.split-img2').append('<div class="col-md-3 player-img"></div>')
-$('.split-img2').append('<div class="col-md-3 "></div>')
 $('.split-img2').append('<div class="col-md-3 enemy-img"></div>')
+$('.split-img2').append('<div class="col-md-3 "></div>')
 //dislay heros in arena
-$('.player-img').addClass(playerChar.type)
-$('.enemy-img').addClass(enemyChar.type)
+animatePlayerHero();
+animateEnemyHero();
 //create action buttons
 $('.container-fluid').append('<div class="row choices2"></div>')
 $('.choices2').append('<div class="col-sm-6 attack-choice"></div>')
@@ -247,6 +268,8 @@ const displayStatsOnScreen=()=>{
     $('.defense-stat').append(playerChar.defense)
     $('.skill-stat').append(playerChar.skill)
     $('.speed-stat').append(playerChar.speed)
+    $('.spAtk-stat').append(playerChar.spAtk)
+    $('.spDef-stat').append(playerChar.spDef)
     $('.typeClass').append(playerChar.type)
 };
 
@@ -254,8 +277,8 @@ const displayStatsOnScreen=()=>{
 let characterSelectorPosition = 0;
 const checkPosition=()=>{
     if(characterSelectorPosition === 1){
-        $(".player-display").addClass("warrior")
-        playerChar = warrior;
+        $(".player-display").addClass("knight")
+        playerChar = knight;
         displayStatsOnScreen();
     }
     else if(characterSelectorPosition === 2){
@@ -274,8 +297,8 @@ const checkPosition=()=>{
         displayStatsOnScreen();
     }
     else{
-        $(".player-display").addClass("lancer")
-        playerChar = lancer
+        $(".player-display").addClass("archer")
+        playerChar = archer
         displayStatsOnScreen()
     }
 };
@@ -296,7 +319,7 @@ const pickSelectorRight=()=>{
     checkPosition();
 };
 const pickedCharacter=()=>{
-    if(characterSelectorPosition >= 0){
+    if(characterSelectorPosition > 0){
         createArena();
     }else{
         $(".messages").text("Choose LEFT or RIGHT to select a Hero!")
@@ -308,9 +331,9 @@ const pickedCharacter=()=>{
 
 //clear hero class from player-display window
 const clearHero=()=>{
-    $('.player-display').removeClass("warrior")
+    $('.player-display').removeClass("knight")
     $('.player-display').removeClass("rogue")
-    $('.player-display').removeClass("lancer")
+    $('.player-display').removeClass("archer")
     $('.player-display').removeClass("mage")
     $('.player-display').removeClass("rider")
     $('.name-stat').text("Name: ")
@@ -319,6 +342,8 @@ const clearHero=()=>{
     $('.defense-stat').text("Defense: ")
     $('.skill-stat').text("Skill: ")
     $('.speed-stat').text("Speed: ")
+    $('.spAtk-stat').text("spAtk: ")
+    $('.spDef-stat').text("spDef: ")
     $('.typeClass').text("Class: ")
 };
 
