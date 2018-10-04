@@ -1,7 +1,7 @@
 
 
 class character {
-    constructor(name,type, magicUser, hp, strength, defense, skill, speed, spAtk, spDef, limit, debuff ){
+    constructor(name,type, magicUser, hp, strength, defense, skill, speed, spAtk, spDef, level ){
     this.name = name;
     this.hp = hp;
     this.type = type;
@@ -13,8 +13,7 @@ class character {
     this.speed = speed;
     this.spAtk = spAtk;
     this.spDef = spDef;
-    this.limit = limit;
-    this.debuff = debuff;
+    this.level = level;
     }
     attack (enemy){
         //check skill hit
@@ -72,12 +71,12 @@ class character {
 
 };
 
-//character creation: name, hp, strength, defense, skill, speed, special attack, special def, 
- const knight = new character("Hector",'knight', false, 20, 5, 4, 2, 1, 1, 1, false, false );
- const rogue = new character("Kaze",'rogue',false, 20, 4, 1, 3, 4, 1, 3, false, false );
- const archer = new character("Selena",'archer', false, 20, 4, 2, 2, 2, 1, 2, false );
- const mage = new character("Linde",'mage', true, 20, 1, 2, 3, 2, 4, 4, false, false )
- const rider = new character("Minerva",'rider', false, 20, 4, 3, 2, 3, 1, 3, false, false)
+//character creation: name, hp, strength, defense, skill, speed, special attack, special def, level 
+ const knight = new character("Hector",'knight', false, 20, 6, 6, 2, 1, 1, 1, 1);
+ const rogue = new character("Kaze",'rogue',false, 20, 4, 1, 3, 4, 1, 3, 1);
+ const archer = new character("Selena",'archer', false, 20, 4, 2, 2, 2, 1, 2, 1);
+ const mage = new character("Linde",'mage', true, 20, 1, 2, 3, 2, 4, 4, 1)
+ const rider = new character("Minerva",'rider', false, 20, 4, 3, 2, 3, 1, 3, 1)
  //character select Array
  const charSelection = [knight, rogue, archer, mage, rider];
 
@@ -85,8 +84,12 @@ class character {
  let playerChar = 0;
  
 //random enemy generate
-//spread operator creates a COPY of the object
-const enemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelection.length)]);
+let enemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelection.length)]);
+//new enemy
+const newEnemy=()=>{
+    const newEnemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelection.length)]);
+    enemyChar = newEnemyChar;
+}
 
 //update health bars
 const updateHealth=()=>{
@@ -127,29 +130,82 @@ const compChoice=()=>{
 //player clashNumber
 let playerClash = 0;
 
+//level up
+ const levelUp=()=>{
+    playerChar.level += 1;
+    playerChar.hp = playerChar.originalHp + (Math.floor(Math.random()*1)+3)
+    playerChar.originalHp = playerChar.hp
+    playerChar.strength += (Math.floor(Math.random()*1)+3)
+    playerChar.defense += (Math.floor(Math.random()*1)+3)
+    playerChar.skill += (Math.floor(Math.random()*1)+3)
+    playerChar.speed += (Math.floor(Math.random()*1)+3)
+    playerChar.spAtk += (Math.floor(Math.random()*1)+3)
+    playerChar.spDef += (Math.floor(Math.random()*1)+3)
+    console.log(playerChar)
+ };
+
+ //reset arena
+const resetArena=()=>{
+    newEnemy();
+    animateEnemyHero()
+    updateHealth();
+    enemyChar.hp = enemyChar.originalHp;
+    $('.enemy-name').empty().append(`${enemyChar.name} the ${enemyChar.type}`)
+    $('.messages').append("Another Enemy Hero has entered the Arena")
+}
+
+//next level function
+const nextLevel=()=>{
+    levelUp()
+    resetArena()
+    
+}
+
 //WinOrLose 
 const checkWinOrLose=()=>{
-    if(playerChar.hp === 0){
-        alert('You Died')
+    if(playerChar.hp  === 0 && enemyChar.hp > 0){
+        $('.modal').modal("show")
+        $('.modal-footer').append('<button type="button" class="btn btn-primary-restart">Try Again</button>')
+        $('.modal-body').append('<h2>YOU DIED</h2>')
+        // alert('You Died')
         $('.messages').empty()
         $('.player-hp').empty()
         $('.enemy-hp').empty()
         $('.player-img').removeClass(`${playerChar.type}Attack`)
         $('.enemy-img').removeClass(`${enemyChar.type}Attack`)
-
-    };
-    if(enemyChar.hp === 0){
-        alert('You won!')
+    }
+    else if (enemyChar.hp  === 0 && playerChar.hp > 0){
+        $('.modal').modal("show")
+        $('.modal-footer').append('<button type="button" class="btn btn-primary-continue">Next Fight</button>')
+        $('.modal-body').empty().append('<h3>The blood of your foes fuels your Rage</h3>')
         $('.messages').empty()
-        $('.player-health').empty()
-        $('.enemy-health').empty()
+        // $('.player-health').empty()
+        // $('.enemy-health').empty()
         $('.enemy-img').empty();
+        // $('.player-img').removeClass(`${playerChar.type}Attack`)
+        $('.enemy-img').removeClass(`${enemyChar.type}Attack`)
+    }
+    else if(playerChar.hp === 0 && enemyChar.hp === 0){
+        $('.modal').modal("show")
+        $('.modal-footer').append('<button type="button" class="btn btn-primary-restart">Try Again</button>')
+        $('.modal-body').empty().append('<h2>YOU DIED</h2>')
+        $('.messages').empty()
+        $('.player-hp').empty()
+        $('.enemy-hp').empty()
         $('.player-img').removeClass(`${playerChar.type}Attack`)
         $('.enemy-img').removeClass(`${enemyChar.type}Attack`)
     }
-}
+    //restart button listener
+    $('.btn-primary-restart').on("click", function(){
+    location.reload();
+    })
+    //continue to fight + level up
+    $('.btn-primary-continue').on("click", function(){
+        $('.modal').modal("hide")
+        nextLevel()
+    })
+};
 
-let battleTurn = 1;
 //battle function
 const battle=()=>{
     compChoice()
@@ -159,31 +215,22 @@ const battle=()=>{
         $('.messages').append("Enemy dodged your attack!")
     }else if(enemyClash === 4 && playerClash === 2){
         playerChar.attack(enemyChar);
-        // playerLimit++;
         $('.messages').append("Enemy tried to dodge but failed")
     }else if(playerClash === 4 && enemyClash !== 2){
         $('.messages').append("You dodged their attack!")
     }else if(playerClash === 4 && enemyClash === 2){
         enemyChar.attack(playerChar)
-        // enemyLimit++;
         $('.messages').append("You tried to dodge but failed")
     }else if(playerClash !== enemyClash){
         playerChar.attack(enemyChar)
-        // playerLimit++
         enemyChar.attack(playerChar)
-        // enemyLimit++;
         $('.messages').append("Blood was shed..")
     }else{
         $('.messages').append("You clashed weapons, no damage dealt.")
     }
     updateHealth();
     checkWinOrLose();
-    battleTurn++
-    if(battleTurn > 2){
-        battleTurn = 1
-    }
-    console.log(playerClash, enemyClash)
-    console.log("battle turn is " + battleTurn)
+    console.log(`playerClash is ${playerClash} and enemyClash is ${enemyClash}`)
 };
 
 //clear health and message display
@@ -195,7 +242,6 @@ const clearDisplays=()=>{
 
 //Animate character to arena
 const animatePlayerHero=()=>{
-
     for(let i=0; i<charSelection.length; i++){
         if(playerChar === charSelection[i]){
             $(".player-img").addClass(`${playerChar.type}Attack`).addClass("mirror")
