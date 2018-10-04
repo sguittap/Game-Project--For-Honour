@@ -1,7 +1,7 @@
 
 
 class character {
-    constructor(name,type, magicUser, hp, strength, defense, skill, speed, spAtk, spDef, limit ){
+    constructor(name,type, magicUser, hp, strength, defense, skill, speed, spAtk, spDef, limit, debuff ){
     this.name = name;
     this.hp = hp;
     this.type = type;
@@ -14,6 +14,7 @@ class character {
     this.spAtk = spAtk;
     this.spDef = spDef;
     this.limit = limit;
+    this.debuff = debuff;
     }
     attack (enemy){
         //check skill hit
@@ -68,14 +69,15 @@ class character {
             }    
         }
     }
+
 };
 
 //character creation: name, hp, strength, defense, skill, speed, special attack, special def, 
- const knight = new character("Hector",'knight', false, 20, 5, 4, 2, 1, 1, 1, false );
- const rogue = new character("Kaze",'rogue',false, 20, 4, 1, 3, 4, 1, 3, false );
+ const knight = new character("Hector",'knight', false, 20, 5, 4, 2, 1, 1, 1, false, false );
+ const rogue = new character("Kaze",'rogue',false, 20, 4, 1, 3, 4, 1, 3, false, false );
  const archer = new character("Selena",'archer', false, 20, 4, 2, 2, 2, 1, 2, false );
- const mage = new character("Linde",'mage', true, 20, 1, 2, 3, 2, 4, 4, false )
- const rider = new character("Minerva",'rider', false, 20, 4, 3, 2, 3, 1, 3, false)
+ const mage = new character("Linde",'mage', true, 20, 1, 2, 3, 2, 4, 4, false, false )
+ const rider = new character("Minerva",'rider', false, 20, 4, 3, 2, 3, 1, 3, false, false)
  //character select Array
  const charSelection = [knight, rogue, archer, mage, rider];
 
@@ -146,29 +148,8 @@ const checkWinOrLose=()=>{
         $('.enemy-img').removeClass(`${enemyChar.type}Attack`)
     }
 }
-//add super move button
-let playerLimit = 0;
-let enemyLimit = 0;
-const checkPlayerLimit=()=>{
-    if(this.limit === false){
-        if(playerLimit >= 3){
-            $('.attack-choice').append('<button type="button" class="btn btn-primary-super btn-sm">Super</button>')
-            this.limit = true;
-        }
-    }
-}
-//Super move event listener
-$('.btn-primary-super').on("click", function(){
-    $('.btn-primary-super').remove()
-    this.limit = false;
-    playerLimit = 0
-    if(playerChar === knight){
 
-    }
-    
-});
-
-
+let battleTurn = 1;
 //battle function
 const battle=()=>{
     compChoice()
@@ -178,26 +159,31 @@ const battle=()=>{
         $('.messages').append("Enemy dodged your attack!")
     }else if(enemyClash === 4 && playerClash === 2){
         playerChar.attack(enemyChar);
-        playerLimit++;
+        // playerLimit++;
         $('.messages').append("Enemy tried to dodge but failed")
     }else if(playerClash === 4 && enemyClash !== 2){
         $('.messages').append("You dodged their attack!")
     }else if(playerClash === 4 && enemyClash === 2){
         enemyChar.attack(playerChar)
-        enemyLimit++;
+        // enemyLimit++;
         $('.messages').append("You tried to dodge but failed")
     }else if(playerClash !== enemyClash){
         playerChar.attack(enemyChar)
-        playerLimit++
+        // playerLimit++
         enemyChar.attack(playerChar)
-        enemyLimit++;
+        // enemyLimit++;
         $('.messages').append("Blood was shed..")
     }else{
         $('.messages').append("You clashed weapons, no damage dealt.")
     }
     updateHealth();
     checkWinOrLose();
+    battleTurn++
+    if(battleTurn > 2){
+        battleTurn = 1
+    }
     console.log(playerClash, enemyClash)
+    console.log("battle turn is " + battleTurn)
 };
 
 //clear health and message display
@@ -265,28 +251,28 @@ $('.btn-primary-left').on("click", function(){
     playerClash = 1;
     clearDisplays();
     battle();
-    checkPlayerLimit();
+    // checkPlayerLimit();
 });
 
 $('.btn-primary-top').on("click", function(){
     playerClash = 2;
     clearDisplays();
     battle();
-    checkPlayerLimit();
+    // checkPlayerLimit();
 });
 
 $('.btn-primary-right').on("click", function(){
     playerClash = 3;
     clearDisplays();
     battle();
-    checkPlayerLimit();
+    // checkPlayerLimit();
 });
 
 $('.btn-primary-dodge').on("click", function(){
     playerClash = 4;
     clearDisplays();
     battle();
-    checkPlayerLimit();
+    // checkPlayerLimit();
 });
 };
 
