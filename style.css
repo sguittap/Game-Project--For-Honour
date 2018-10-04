@@ -3,7 +3,9 @@
     -webkit-transform: scale(-1, 1);
     transform: scale(-1, 1);
  }
-
+.container-fluid{
+    height: 75%;
+}
 .stats-bar {
     background-color:rgba(0, 72, 255, 0.447);
     border-style: solid;
@@ -57,19 +59,9 @@ width:100%;
 }
 .btn-primary-leftChoice{
     margin-right: 1%;
-    /* background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: -moz-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: -ms-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: -o-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: linear-gradient(to bottom, #2079b0, #eb94d0); */
 }
 .btn-primary-rightChoice{
     margin-right: 1%;
-    /* background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: -moz-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: -ms-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: -o-linear-gradient(top, #2079b0, #eb94d0);
-    background-image: linear-gradient(to bottom, #2079b0, #eb94d0); */
 }
 .btn-primary-left{
     margin-right: 1%;
@@ -86,24 +78,33 @@ width:100%;
 .super{
     margin-right: 1%;
 }
+.firstArena{
+    max-width: 100%;
+    max-height: 100%;
+}
 .backgroundImg{
     background-image: url("http://smashbros-miiverse.com/images/stages/w300/arena-ferox.png");
     background-size: cover;
     background-repeat: no-repeat;
-    height: auto;
+    height: 33em;
+    width: 100%;
 }
 .backgroundImg2{
     background-image: url("http://smashbros-miiverse.com/images/stages/w300/arena-ferox.png");
     background-size: cover;
     background-repeat: no-repeat;
-    height: 150px;
+    height: 33em;
+    width: 100%;
 }
-.dead{
-
+.player-display{
+    margin-top: 20%;
 }
-/* .choices2{
-    height:50px;
-} */
+.player-img{
+    margin-top: 20%;
+}
+.enemy-img{
+    margin-top: 20%;
+}
 .split-img{
     height:50%;
 }
