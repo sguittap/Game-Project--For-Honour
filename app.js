@@ -251,28 +251,52 @@ $('.btn-primary-left').on("click", function(){
     playerClash = 1;
     clearDisplays();
     battle();
-    // checkPlayerLimit();
+    const disableButton=()=>{
+        $('.btn-primary-left').attr("disabled", true)
+        function enableButton(){
+            $('.btn-primary-left').attr("disabled", false)
+        }setTimeout(enableButton,1000);
+    }
+    disableButton()
 });
 
 $('.btn-primary-top').on("click", function(){
     playerClash = 2;
     clearDisplays();
     battle();
-    // checkPlayerLimit();
+    const disableButton=()=>{
+        $('.btn-primary-top').attr("disabled", true)
+        function enableButton(){
+            $('.btn-primary-top').attr("disabled", false)
+        }setTimeout(enableButton,1000);
+    }
+    disableButton()
 });
 
 $('.btn-primary-right').on("click", function(){
     playerClash = 3;
     clearDisplays();
     battle();
-    // checkPlayerLimit();
+    const disableButton=()=>{
+        $('.btn-primary-right').attr("disabled", true)
+        function enableButton(){
+            $('.btn-primary-right').attr("disabled", false)
+        }setTimeout(enableButton,1000);
+    }
+    disableButton()
 });
 
 $('.btn-primary-dodge').on("click", function(){
     playerClash = 4;
     clearDisplays();
     battle();
-    // checkPlayerLimit();
+    const disableButton=()=>{
+        $('.btn-primary-dodge').attr("disabled", true)
+        function enableButton(){
+            $('.btn-primary-dodge').attr("disabled", false)
+        }setTimeout(enableButton,1000);
+    }
+    disableButton()
 });
 };
 
