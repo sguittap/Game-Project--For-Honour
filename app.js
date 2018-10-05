@@ -77,8 +77,12 @@ class character {
  const archer = new character("Selena",'archer', false, 20, 4, 2, 2, 2, 1, 2, 1);
  const mage = new character("Linde",'mage', true, 20, 1, 2, 3, 2, 4, 4, 1)
  const rider = new character("Minerva",'rider', false, 20, 4, 3, 2, 3, 1, 3, 1)
+ const demonDragon = new character("FA", 'demonDragon', false, 35, 7, 6, 3, 4, 5, 5, 5)
+ const fairyDragon = new character("Iduon", 'fairyDragon', true, 35, 3, 6, 3, 4, 7, 6, 5)
+
  //character select Array
  const charSelection = [knight, rogue, archer, mage, rider];
+ const bossSelection = [demonDragon, fairyDragon]
 
  //character selection
  let playerChar = 0;
@@ -89,6 +93,9 @@ let enemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelecti
 const newEnemy=()=>{
     const newEnemyChar = Object.assign(charSelection[Math.floor(Math.random()*charSelection.length)]);
     enemyChar = newEnemyChar;
+    if(playerChar === enemyChar){
+        newEnemy();
+    }
 }
 
 //update health bars
@@ -106,6 +113,7 @@ updatePlayerHealthBar();
         $('.enemyBar').css("width", percentHp);
     }
 updateEnemyHealthBar();
+console.log(`player hp = ${playerChar.hp}  enemy hp = ${enemyChar.hp}`)
 }
 
 //computer clashNumber
@@ -135,23 +143,32 @@ let playerClash = 0;
     playerChar.level += 1;
     playerChar.hp = playerChar.originalHp + (Math.floor(Math.random()*1)+3)
     playerChar.originalHp = playerChar.hp
-    playerChar.strength += (Math.floor(Math.random()*1)+3)
-    playerChar.defense += (Math.floor(Math.random()*1)+3)
-    playerChar.skill += (Math.floor(Math.random()*1)+3)
-    playerChar.speed += (Math.floor(Math.random()*1)+3)
-    playerChar.spAtk += (Math.floor(Math.random()*1)+3)
-    playerChar.spDef += (Math.floor(Math.random()*1)+3)
+    playerChar.strength += Math.floor(Math.random()*3);
+    playerChar.defense += Math.floor(Math.random()*3);
+    playerChar.skill += Math.floor(Math.random()*3);
+    playerChar.speed += Math.floor(Math.random()*3);
+    playerChar.spAtk += Math.floor(Math.random()*3);
+    playerChar.spDef += Math.floor(Math.random()*3);
     console.log(playerChar)
  };
 
  //reset arena
 const resetArena=()=>{
-    newEnemy();
-    animateEnemyHero()
-    updateHealth();
-    enemyChar.hp = enemyChar.originalHp;
-    $('.enemy-name').empty().append(`${enemyChar.name} the ${enemyChar.type}`)
-    $('.messages').append("Another Enemy Hero has entered the Arena")
+    if(playerChar.level % 3 === 0){
+        enemyChar = Object.assign(bossSelection[Math.floor(Math.random()*bossSelection.length)]);
+        enemyChar.hp = enemyChar.originalHp;
+        animateEnemyBoss()
+        updateHealth();
+        $('.enemy-name').empty().append(`${enemyChar.name} the ${enemyChar.type}`)
+        $('.messages').append("A Dragon has entered the Arena...Defend yourself!")
+    }else{
+        newEnemy();
+        enemyChar.hp = enemyChar.originalHp;
+        animateEnemyHero()
+        updateHealth();
+        $('.enemy-name').empty().append(`${enemyChar.name} the ${enemyChar.type}`)
+        $('.messages').append("Another Enemy Hero has entered the Arena")
+    }
 }
 
 //next level function
@@ -167,7 +184,6 @@ const checkWinOrLose=()=>{
         $('.modal').modal("show")
         $('.modal-footer').append('<button type="button" class="btn btn-primary-restart">Try Again</button>')
         $('.modal-body').append('<h2>YOU DIED</h2>')
-        // alert('You Died')
         $('.messages').empty()
         $('.player-hp').empty()
         $('.enemy-hp').empty()
@@ -179,16 +195,13 @@ const checkWinOrLose=()=>{
         $('.modal-footer').append('<button type="button" class="btn btn-primary-continue">Next Fight</button>')
         $('.modal-body').empty().append('<h3>The blood of your foes fuels your Rage</h3>')
         $('.messages').empty()
-        // $('.player-health').empty()
-        // $('.enemy-health').empty()
         $('.enemy-img').empty();
-        // $('.player-img').removeClass(`${playerChar.type}Attack`)
         $('.enemy-img').removeClass(`${enemyChar.type}Attack`)
     }
     else if(playerChar.hp === 0 && enemyChar.hp === 0){
         $('.modal').modal("show")
         $('.modal-footer').append('<button type="button" class="btn btn-primary-restart">Try Again</button>')
-        $('.modal-body').empty().append('<h2>YOU DIED</h2>')
+        $('.modal-body').empty().append('<h2>You both died in a pool of your own blood</h2>')
         $('.messages').empty()
         $('.player-hp').empty()
         $('.enemy-hp').empty()
@@ -202,6 +215,7 @@ const checkWinOrLose=()=>{
     //continue to fight + level up
     $('.btn-primary-continue').on("click", function(){
         $('.modal').modal("hide")
+        $('.btn-primary-continue').remove()
         nextLevel()
     })
 };
@@ -227,6 +241,7 @@ const battle=()=>{
         $('.messages').append("Blood was shed..")
     }else{
         $('.messages').append("You clashed weapons, no damage dealt.")
+        return;
     }
     updateHealth();
     checkWinOrLose();
@@ -251,6 +266,13 @@ const animatePlayerHero=()=>{
 const animateEnemyHero=()=>{
     for(let i=0; i<charSelection.length; i++){
         if(enemyChar === charSelection[i]){
+            $(".enemy-img").addClass(`${enemyChar.type}Attack`)
+        }
+    }
+}
+const animateEnemyBoss=()=>{
+    for(let i=0; i<bossSelection.length; i++){
+        if(enemyChar === bossSelection[i]){
             $(".enemy-img").addClass(`${enemyChar.type}Attack`)
         }
     }
@@ -437,14 +459,10 @@ const clearHero=()=>{
 $('.btn-primary-leftChoice').on("click", function(){
     clearHero()
     pickSelectorLeft();
-    console.log("pick left")
-    console.log(characterSelectorPosition)
 });
 $('.btn-primary-rightChoice').on("click", function(){
     clearHero();
     pickSelectorRight();
-    console.log("pick right")
-    console.log(characterSelectorPosition)
 });
 $('.btn-primary-select').on("click", function(){
     pickedCharacter();
